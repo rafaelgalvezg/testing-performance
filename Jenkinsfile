@@ -8,12 +8,16 @@ pipeline {
     stages {
         stage('Performance Tests') {
             steps {
-                sh 'jmeter -n -t PetClinic.jmx -l petclinic-results.jtl'
+                node { // Agregar el bloque node
+                    sh 'jmeter -n -t PetClinic.jmx -l petclinic-results.jtl'
+                }
             }
         }
         stage('Publish Results') {
             steps {
-                perfReport sourceDataFiles : 'petclinic-results.jtl'
+                node { // Agregar el bloque node
+                    perfReport sourceDataFiles : 'petclinic-results.jtl'
+                }
             }
         }
     }
